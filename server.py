@@ -4,7 +4,7 @@ import cv2
 import scipy.io as sio
 import numpy as np
 import picamera
-
+import picamera.array
 
 s = socket.socket()
 host = '0.0.0.0'
