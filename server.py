@@ -5,9 +5,7 @@ import scipy.io as sio
 import numpy as np
 import picamera
 
-cam = cv2.VideoCapture(0)
-cam.set(cv2.CAP_PROP_FRAME_WIDTH,800)
-cam.set(cv2.CAP_PROP_FRAME_HEIGHT,600)
+
 s = socket.socket()
 host = '127.0.0.1'
 port = 13500
@@ -24,9 +22,12 @@ while not mode == "end":
     print cmdBox
     cmdType = cmdBox[0]
     if cmdType == 'getpic':
-        ret, img = cam.read()
-        data = cv2.imencode('.jpg',img)[1]
-        conn.send(data.tobytes())
+        with picamera.PiCamera() as cam:
+            cam.resolution = (1280,720)
+            with picamera.array.PiRGBArray(cam) as output:
+                cam.capture(output,'rgb')
+                data = cv2.imencode('.jpg',output.array)[1]
+                conn.send(data.tobytes())
     elif cmdType == "classify":
         label = np.uint8([[cmdBox[1]]])
         conn.send('ack')
@@ -43,4 +44,3 @@ while not mode == "end":
             box = np.append(box,newdata,0)
         print box
     conn.close()
-cam.release()
