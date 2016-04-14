@@ -3,6 +3,7 @@ import time
 import cv2
 import scipy.io as sio
 import numpy as np
+import picamera
 
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH,800)
