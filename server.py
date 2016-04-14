@@ -7,7 +7,7 @@ import picamera
 
 
 s = socket.socket()
-host = '192.168.0.111'
+host = '0.0.0.0'
 port = 13500
 addr = (host,port)
 s.bind(addr)
