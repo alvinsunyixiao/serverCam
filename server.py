@@ -26,8 +26,9 @@ while not mode == "end":
             cam.resolution = (1280,720)
             with picamera.array.PiRGBArray(cam) as output:
                 cam.capture(output,'rgb')
-                data = cv2.imencode('.jpg',output.array)[1]
-                conn.send(data.tobytes())
+                img = output.array
+                data = cv2.imencode('.jpg',img)[1]
+                conn.send(data.tostring())
     elif cmdType == "classify":
         label = np.uint8([[cmdBox[1]]])
         conn.send('ack')
