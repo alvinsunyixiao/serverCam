@@ -5,6 +5,7 @@ import scipy.io as sio
 import numpy as np
 import picamera
 import picamera.array
+import dataManipulation as dm
 
 s = socket.socket()
 host = '0.0.0.0'
@@ -15,6 +16,8 @@ s.listen(5)
 mode = "listen"
 box = np.array([[]])
 print addr
+
+
 while not mode == "end":
     conn, clientAdd = s.accept()
     cmdString = conn.recv(1024)
